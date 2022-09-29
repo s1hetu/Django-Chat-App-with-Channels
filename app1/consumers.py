@@ -199,9 +199,7 @@ class ChatPersonalConsumer(WebsocketConsumer):
                 self.channel_name,
             )
             self.room.online.remove(self.user)
-        else:
-            print("login first")
-
+    
     # server to client
     def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
@@ -210,11 +208,8 @@ class ChatPersonalConsumer(WebsocketConsumer):
         if not self.user.is_authenticated:
             return "Login in"
 
-        # -------------------- new --------------------
         if message:
             
-
-            # send private message to the target
             async_to_sync(self.channel_layer.group_send)(
                 f'inbox_{self.room_name}',
                 {
