@@ -186,9 +186,6 @@ class ChatPersonalConsumer(WebsocketConsumer):
                 }
             )
             self.room.online.add(self.user)
-        else:
-            print("Login first")
-            
 
     def disconnect(self, close_code):
         
