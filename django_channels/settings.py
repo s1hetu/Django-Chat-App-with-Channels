@@ -129,6 +129,7 @@ ASGI_APPLICATION = "django_channels.asgi.application"
 # default
 WSGI_APPLICATION = 'django_channels.wsgi.application'
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'get-all-rooms'
 
 CHANNEL_LAYERS = {
