@@ -1,0 +1,33 @@
+<p>All rooms </p>
+
+
+<p>Welcome user {{user}}</p>
+{% load static %}
+<br><br><br><br>
+<label for="chat-room">Enter the room here that you want to chat with</label>
+<input type="text" id="chat-room" placeholder="Chat room">
+<br>
+<br>
+
+<small>If the chat room doesnt exists, it will be created for you</small>
+<button id="chat-button">Chat</button>
+<br><br><br><br>
+
+<label for="select-room">Active rooms</label>
+<select multiple id="select-room">
+    {% for room in rooms %}
+    <option>{{ room }}</option>
+    {% endfor %}
+</select>
+
+
+<br><br><br>
+<label for="chat-personal">Users</label>
+<select  multiple id="chat-personal">
+    {% for user_each in users %}
+    <option>{{ user_each }}</option>
+    {% endfor %}
+</select>
+
+
+<script src="{% static 'app1/home.js' %}"></script>

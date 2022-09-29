@@ -1,0 +1,5 @@
+Django==4.1.1
+channels==3.0.5
+Python==3.8.14
+sudo apt install redis
+channels-redis==3.3.1
