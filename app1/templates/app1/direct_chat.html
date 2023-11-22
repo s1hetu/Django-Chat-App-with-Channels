@@ -1,31 +1,60 @@
-{% load static %}
+{% extends 'app1/base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
+            <p id="to_user_msg"><b>{{ to_user }}</b></p>
+        </div>
+        <div class="col-md-1" style="text-align: right; padding-right: 45px">
+            <p id="to_user_msg"><b>{{ request.user }}</b></p>
+        </div>
+    </div>
+    <div id="msg">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% for message in messages %}
+                    {% if message.room.name == user.username %}
+                        <p style="text-align: left; word-wrap: break-word; word-break: break-all;">
+                            <span style="border:1px solid silver; border-bottom-right-radius: 10px; border-top-right-radius: 10px;
+                            padding: 5px 35px 5px 10px; margin:0 35px 5px 10px ">{{ message.content }}</span>
+                        </p>
+                    {% else %}
+                        <p style="text-align: right; word-wrap: break-word; word-break: break-all;">
+                            <span style="border:1px solid silver; border-bottom-left-radius: 10px; border-top-left-radius: 10px;
+                            padding: 5px 35px 5px 10px; margin:0 35px 5px 10px">{{ message.content }}</span>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-<p id="to_user_msg">Welcome to Persoanl Chat with user <b>{{to_user}}</b></p>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" id="my-past-msg">
 
-<div id="msg">
-    {% for i in messages %}
-    {{i.user}} : {{i.content}}
-    <br>
-    {% endfor %}
-</div>
- <p id='past-msg'>
-   {% for message in past_messages %}
-        {{message.user}} : {{message.content}}
-        <br> 
-    {% endfor %} 
-</p>
+        </div>
+    </div>
 
-<br><br><br>
-<label for='chat-message'>Enter your message here</label>
-<input type="text" id='chat-message'>
-<br><br>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <br><br>
+            <label for='chat-message'>Enter your message here</label>
+            <input type="text" id='chat-message'>
+            <br><br>
 
 
-<button id='send-message'>Send</button>
+            <button id='send-message'>Send</button>
 
-{{ to_user.username|json_script:"MsgToUser" }}
-{{ user.username|json_script:"current_user" }}
-        
-<script src="{% static 'app1/direct_chat.js' %}"></script>
+            {{ to_user.username|json_script:"MsgToUser" }}
+            {{ user.username|json_script:"current_user" }}
+        </div>
+    </div>
 
-<a href="{% url 'logout' %}">Logout</a>
+
+    <script src="{% static 'app1/direct_chat.js' %}"></script>
+
+{% endblock %}

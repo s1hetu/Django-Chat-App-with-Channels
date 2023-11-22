@@ -1,0 +1,24 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+{% block content %}
+    <label for="room-name">Enter Room Name</label>
+    <br>
+    <input type="text" id="room-name" placeholder="Room Name" required>
+    <div style="color: red; " id="room-name-error"></div>
+    <br><br><br>
+
+    <label for="select-users-to-add">Add Users</label>
+    <br>
+    <select multiple id="select-users-to-add">
+        {% for user in users %}
+            <option>{{ user }}</option>
+        {% endfor %}
+    </select>
+    <div style="color: red; " id="users-error"></div>
+    <br><br><br>
+    <button type="button" onclick="get_room_params()">Create</button>
+
+    <p id="creation-msg" style="color: green"></p>
+
+    <script src="{% static 'app1/create_room.js' %}"></script>
+{% endblock %}

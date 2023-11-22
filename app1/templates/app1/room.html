@@ -1,40 +1,43 @@
-{% load static %}
+{% extends 'app1/base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="row">
+        <div class="col-md-12">
+            <p style="text-align: center"><b>{{ room.name }}</b></p>
+        </div>
+    </div>
 
-<p>Welcome to room {{room.name}}</p>
 
-<br>
-<label for='room-name'>Room : {{room.name}}</label>
-<br><br>
 
-<div id='past-msg'>
-    {% for message in past_messages %}
-        {{message.user}} : {{message.content}}
-        <br>
-    {% endfor %}
+    <div id='past-msg'>
+        {% for message in past_messages %}
+            {{ message.user }} : {{ message.content }}
+            <br>
+        {% endfor %}
 
-</div>
 
-<br id='lb'>
-<br>
-<textarea id='room-name' readonly>
+
+    </div>
+
+    <br id='lb'>
+    <br>
+    <textarea id='room-name' readonly>
     
 </textarea>
-<br><br><br>
+    <br><br><br>
 
-<label for="online-users">Online users</label>
-<select multiple class="form-control" id="online-users">
-</select>
+    <label for="online-users">Group Members</label>
+    <select multiple class="form-control" id="online-users">
+    </select>
 
-<br><br><br>
-<label for='chat-message'>Enter your message here</label>
-<input type="text" id='chat-message'>
-<br><br>
+    <br><br><br>
+    <label for='chat-message'>Enter your message here</label>
+    <input type="text" id='chat-message'>
+    <br><br>
 
+    <button id='send-message'>Send</button>
 
-<button id='send-message'>Send</button>
+    {{ room.name|json_script:"roomName" }}
+    <script src="{% static 'app1/room.js' %}"></script>
 
-{{ room.name|json_script:"roomName" }}
-        
-<script src="{% static 'app1/room.js' %}"></script>
-
-<a href="{% url 'logout' %}">Logout</a>
+{% endblock %}

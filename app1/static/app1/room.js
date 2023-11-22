@@ -1,7 +1,4 @@
-console.log("Sanity check from room.js.");
-
 const roomName = JSON.parse(document.getElementById('roomName').textContent);
-
 let room_name = document.querySelector("#room-name");
 let chat_message = document.querySelector("#chat-message");
 let send_message = document.querySelector("#send-message");
