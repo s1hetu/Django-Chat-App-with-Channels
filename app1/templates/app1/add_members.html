@@ -1,0 +1,27 @@
+{% extends 'app1/base.html' %}
+{% block content %}
+    {% load static %}
+
+    <h5><b id="room-name">{{ room.name }}</b></h5>
+
+    <h4>Current Members</h4>
+    {{ request.user }} (You) <br>
+    {% for user in current_members %}
+        {{ user }}
+        <br>
+    {% endfor %}
+
+    <h4>Available Users</h4>
+    <select multiple id="add-members-to-room">
+        {% for user in available_users %}
+            <option>{{ user }}</option>
+            <br>
+        {% endfor %}
+    </select>
+    <p id="user-error" style="color: red"></p>
+    <br>
+    <button type="button" onclick="add_members()">Add</button>
+    <p id="users-added-msg" style="color: green"></p>
+
+    <script src="{% static 'app1/add_members.js' %}"></script>
+{% endblock %}

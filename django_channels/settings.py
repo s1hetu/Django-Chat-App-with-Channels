@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wrge@z3m&m%onflbf#4^67bz_o)sus2m2aocda4p1nk^f14_hj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CORS_ALLOW_ALL_ORIGINS = True
 ROOT_URLCONF = 'django_channels.urls'
 
 TEMPLATES = [
@@ -137,3 +137,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# TODO : When deploying, change all ws links to wss
+CSRF_TRUSTED_ORIGINS= ["https://*.ngrok-free.app"]

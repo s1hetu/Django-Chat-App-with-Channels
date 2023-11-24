@@ -1,43 +1,77 @@
 {% extends 'app1/base.html' %}
 {% block content %}
-    {% load static %}
-    <div class="row">
-        <div class="col-md-12">
-            <p style="text-align: center"><b>{{ room.name }}</b></p>
+    <div class="container">
+        {% load static %}
+        <div class="row">
+            <div class="col-md-12">
+                <p style="text-align: center"><b>{{ room.name }}</b></p>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div id='past-msg'>
+                    {% for message in past_messages %}
+                        {% if message.user == request.user %}
+                            <p style="text-align: right; word-wrap: break-word; word-break: break-all;">
+                            <span style="border:1px solid silver; border-bottom-left-radius: 10px; border-top-left-radius: 10px;
+                            padding: 5px 35px 5px 10px; margin:0 35px 5px 10px;">{{ message.user }} : {{ message.content }}</span>
+                            </p>
+                        {% else %}
+                            <p style="text-align: left; word-wrap: break-word; word-break: break-all;">
+                            <span style="border:1px solid silver; border-bottom-right-radius: 10px; border-top-right-radius: 10px;
+                            padding: 5px 35px 5px 10px; margin:0 35px 5px 10px ">{{ message.user }} : {{ message.content }}</span>
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div id='current-msg'>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12 text-center"><h4>Members</h4></div>
+                    <div id="view-members">
+                        <div id="request-user" >{{ request.user.username }}</div> (You)
+
+                        {% for member in members %}
+                            {{ member }}
+                            <br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mb-5"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" onclick="exit_group()">Exit</button>
+                    </div>
+                    <p id="exit-group-message"></p>
+                </div>
+                <div>
+                    <a href="{% url 'add-members' room.name %}">Add Members</a>
+                </div>
+            </div>
+            <br><br><br>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <br><br><br>
+                <label for='chat-message'>Enter your message here</label>
+                <input type="text" id='chat-message'>
+                <br><br>
+
+                <button id='send-message'>Send</button>
+            </div>
+
+        </div>
+
+
+        {{ room.name|json_script:"roomName" }}
+        <script src="{% static 'app1/room.js' %}"></script>
     </div>
-
-
-
-    <div id='past-msg'>
-        {% for message in past_messages %}
-            {{ message.user }} : {{ message.content }}
-            <br>
-        {% endfor %}
-
-
-
-    </div>
-
-    <br id='lb'>
-    <br>
-    <textarea id='room-name' readonly>
-    
-</textarea>
-    <br><br><br>
-
-    <label for="online-users">Group Members</label>
-    <select multiple class="form-control" id="online-users">
-    </select>
-
-    <br><br><br>
-    <label for='chat-message'>Enter your message here</label>
-    <input type="text" id='chat-message'>
-    <br><br>
-
-    <button id='send-message'>Send</button>
-
-    {{ room.name|json_script:"roomName" }}
-    <script src="{% static 'app1/room.js' %}"></script>
-
 {% endblock %}

@@ -1,7 +1,7 @@
 const MsgToUser = JSON.parse(document.getElementById('MsgToUser').textContent);
 const current_user = JSON.parse(document.getElementById('current_user').textContent);
 let to_user = document.querySelector("#to_user_msg");
-let past_msg = document.querySelector("#past-msg");
+let past_msg = document.getElementById("my-past-msg");
 
 // submit if the user presses the enter key
 let chat_message = document.querySelector("#chat-message");
@@ -18,7 +18,6 @@ send_message.onclick = function () {
     chatSocket.send(JSON.stringify({
         "message": chat_message.value,
     }));
-    // TODO: forward the message to the WebSocket
     chat_message.value = "";
 };
 
@@ -47,9 +46,24 @@ function connect() {
 
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        console.log(data);
-        if (data.type == "personal_message") {
-            past_msg.append(data.user, " : ", data.message);
+
+        if (data.type === "personal_message") {
+            // past_msg.append(data.message);
+
+            let new_msg= document.createElement("p")
+            new_msg.style.textAlign = "left";
+            new_msg.style.wordBreak = "break-all";
+            let formatted_new_msg = document.createElement("span")
+            formatted_new_msg.textContent = `${data.message}`
+            formatted_new_msg.style.border = "1px solid silver"
+            formatted_new_msg.style.borderBottomLeftRadius = "10px"
+            formatted_new_msg.style.borderTopLeftRadius = "10px"
+            formatted_new_msg.style.padding = "5px 35px 5px 10px"
+            formatted_new_msg.style.margin = "0 35px 5px 10px"
+            new_msg.appendChild(formatted_new_msg);
+            past_msg.append(new_msg);
+
+
         } else {
             console.error("Unknown message type!");
         }
@@ -62,13 +76,11 @@ function connect() {
             "message": chat_message.value,
         }));
         let abc = document.getElementById("my-past-msg")
-
-        let lineBreak = document.createElement("br");
         let new_msg = document.createElement("p")
         new_msg.style.textAlign = "right";
         new_msg.style.wordBreak = "break-all";
         let formatted_new_msg = document.createElement("span")
-        formatted_new_msg.textContent = `${current_user} : ${chat_message.value}`
+        formatted_new_msg.textContent = `${chat_message.value}`
         formatted_new_msg.style.border = "1px solid silver"
         formatted_new_msg.style.borderBottomLeftRadius = "10px"
         formatted_new_msg.style.borderTopLeftRadius = "10px"

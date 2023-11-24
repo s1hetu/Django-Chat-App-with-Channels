@@ -38,8 +38,10 @@ function get_room_params() {
                 "room_name": name, "users": values,
             }, success: function (result) {
                 if (result.status_code === 200) {
-                    console.log(result)
                     document.getElementById('creation-msg').innerText = result.msg;
+                    setTimeout(function () {
+                        window.location.pathname = "/"
+                    }, 2000);
                 }
             }, error: function (result) {
                 console.log("Error", result)
